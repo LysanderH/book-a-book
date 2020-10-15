@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::domain('admin.myapp.com')->middleware('auth')->group(function () {
+    Route::get('', function () {
+        return view('admin.dashboard');
+    });
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
-//Route::get('/login', function () {
-//    return view('authentication.login');
-//})->name('login');
-//
-//Route::get('/register', function () {
-//    return view('authentication.register');
-//});
+
+
