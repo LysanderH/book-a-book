@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\Image;
+use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
@@ -178,8 +179,31 @@ class BookSeeder extends Seeder
             ],
         ];
 
+        /**
+         * Add image to each book, if there is a thumbnail in the google api
+         */
         foreach ($books as $book) {
-            Book::create($book);
+
+            // Add book to database
+            $currentBook = Book::create($book);
+
+            $url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . str_replace('-', '', $currentBook->isbn);
+
+            // New Guzzle Client
+            $client = new Client();
+
+            // Make the request
+            $res = $client->request('GET', $url, [
+                'verify' => false,
+            ]);
+
+            // Store the answer
+            $content = $res->getBody();
+
+            // If an image exists in api, add the image to the current Book
+            if (isset(json_decode($content)->items[0]->volumeInfo->imageLinks)) {
+                $currentBook->addMediaFromUrl(json_decode($content)->items[0]->volumeInfo->imageLinks->thumbnail)->toMediaCollection('books');
+            }
         }
     }
 }
