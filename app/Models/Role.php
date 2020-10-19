@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collection extends Model
+class Role extends Model
 {
     use HasFactory;
 
-    public function book()
-    {
-        return $this->belongsToMany(Book::class);
+    public function user(){
+        return $this->belongsToMany(User::class);
     }
 }

@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
+
+    public function collection()
+    {
+        return $this->belongsToMany(Collection::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }
