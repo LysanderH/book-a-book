@@ -14,8 +14,8 @@ class CreateBacBookTable extends Migration
     public function up()
     {
         Schema::create('bac_book', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('bac_id')->constrained('bacs');
+            $table->foreignId('book_id')->constrained('books');
         });
     }
 
