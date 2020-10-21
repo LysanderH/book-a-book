@@ -20,6 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('bac');
             $table->string('category');
             $table->string('isbn')->unique();
+            // Separer
             $table->integer('price');
             $table->integer('price_amazon');
             $table->text('excerpt');
