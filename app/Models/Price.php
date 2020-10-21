@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Price extends Model
 {
     use HasFactory;
+
+    public function book()
+    {
+        return $this->hasOne(Book::class);
+    }
 }

@@ -20,4 +20,9 @@ class Book extends Model implements HasMedia
     {
         return $this->belongsToMany(Order::class);
     }
+
+    public function price()
+    {
+        return $this->hasMany(Price::class);
+    }
 }

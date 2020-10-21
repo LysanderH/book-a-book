@@ -14,8 +14,8 @@ class CreateBookPriceTable extends Migration
     public function up()
     {
         Schema::create('book_price', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('book_id')->constrained('books');
+            $table->foreignId('price_id')->constrained('prices');
         });
     }
 
