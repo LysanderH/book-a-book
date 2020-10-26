@@ -43,17 +43,23 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function order()
+    public function orders()
     {
         return $this->belongsToMany(Order::class);
     }
 
-    public function group()
+    public function bacs()
     {
-        return $this->hasOne(Group::class);
+        return $this->hasOne(Bac::class);
     }
-    public function role()
+
+    public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function groups()
+    {
+        return $this->hasOne(Group::class);
     }
 }

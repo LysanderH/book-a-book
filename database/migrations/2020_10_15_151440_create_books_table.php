@@ -17,12 +17,9 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->string('bac');
-            $table->string('category');
             $table->string('isbn')->unique();
-            // Separer
-            $table->integer('price');
-            $table->integer('price_amazon');
+            $table->foreignId('bac_id')->references('id')->on('bacs');
+            $table->foreignId('category_id')->nullable()->references('id')->on('categories');
             $table->text('excerpt');
             $table->timestamps();
         });

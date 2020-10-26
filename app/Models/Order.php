@@ -11,11 +11,16 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasOne(User::class);
     }
 
-    public function status()
+    public function statusChanges()
     {
-        return $this->hasOne(Status::class);
+        return $this->hasMany(StatusChange::class);
+    }
+
+    public function season()
+    {
+        return $this->hasOne(Season::class);
     }
 }

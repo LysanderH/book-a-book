@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bac;
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use function Sodium\add;
 
 class UserSeeder extends Seeder
 {
@@ -25,14 +26,16 @@ class UserSeeder extends Seeder
                 'last-name' => 'Hans',
                 'email' => 'lysander.hans@hotmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'user'
+                'role' => 'user',
+                'last_login' => now()
             ],
             [
                 'first-name' => 'Xavier',
                 'last-name' => 'Spirlet',
                 'email' => 'lysander.hans@student.hepl.be',
                 'password' => Hash::make('password'),
-                'role' => 'admin'
+                'role' => 'admin',
+                'last_login' => now(),
             ],
         ];
 
@@ -45,15 +48,18 @@ class UserSeeder extends Seeder
                 'password' => $user['password'],
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
+                'last_login' => now(),
+                'bac_id' => 3,
+//                'category'=> Category::where('name','=','web-multimédia')
+                'category_id'=> 1
             ]);
-            $currentUser->role()->attach(Role::where('name', $user['role'])->first()->id);
+            $currentUser->roles()->attach(Role::where('name', $user['role'])->first()->id);
+        }
+        //        Add some random users to the default users array
+        $randomUsers = User::factory(98)->create();
 
-            //        Add some random users to the default users array
-            $randomUsers = User::factory(98)->create();
-
-            foreach ($randomUsers as $randomUser) {
-                $randomUser->role()->attach(Role::where('name', 'user')->first()->id);
-            }
+        foreach ($randomUsers as $randomUser) {
+            $randomUser->roles()->attach(Role::where('name', 'user')->first()->id);
         }
     }
 }
