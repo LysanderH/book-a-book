@@ -11,9 +11,14 @@ class Book extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    public function order()
+    public function orders()
     {
-        return $this->belongsToMany(Season::class);
+        return $this->belongsToMany(Order::class);
+    }
+
+    public function seasons()
+    {
+        return $this->belongsToMany(Season::class)->withPivot('price', 'public_price');
     }
 
 }

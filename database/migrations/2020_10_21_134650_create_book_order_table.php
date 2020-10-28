@@ -14,8 +14,8 @@ class CreateBookOrderTable extends Migration
     public function up()
     {
         Schema::create('book_order', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('book_id')->references('id')->on('book')->onDelete('cascade');
+            $table->foreignId('order_id')->references('id')->on('order')->onDelete('cascade');
         });
     }
 

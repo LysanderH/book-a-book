@@ -6,6 +6,7 @@ use App\Models\Bac;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Image;
+use App\Models\Season;
 use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 
@@ -197,6 +198,9 @@ class BookSeeder extends Seeder
 
             $url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . str_replace('-', '', $currentBook->isbn);
 
+            // Add prices to book using pivot table.
+            $currentBook->seasons()->attach(Season::where('start_year', '2020')->first()->id, ['price' => $book['price'], 'public_price' => $book['price_amazon']]);
+
             // New Guzzle Client
             $client = new Client();
 
@@ -213,5 +217,7 @@ class BookSeeder extends Seeder
                 $currentBook->addMediaFromUrl(json_decode($content)->items[0]->volumeInfo->imageLinks->thumbnail)->toMediaCollection('books');
             }
         }
+
+
     }
 }

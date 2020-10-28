@@ -9,8 +9,8 @@ class Status extends Model
 {
     use HasFactory;
 
-    public function statusChanges()
+    public function orders()
     {
-        return $this->hasMany(StatusChange::class);
+        return $this->belongsToMany(Order::class)->withTimestamps();
     }
 }

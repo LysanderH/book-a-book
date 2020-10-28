@@ -16,8 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('status_change_id')->references('id')->on('status_changes')->onDelete('cascade');
             $table->foreignId('season_id')->references('id')->on('seasons')->onDelete('cascade');
+            $table->boolean('draft')->default(false);
             $table->timestamps();
         });
     }

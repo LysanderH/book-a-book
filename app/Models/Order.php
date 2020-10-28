@@ -14,13 +14,18 @@ class Order extends Model
         return $this->hasOne(User::class);
     }
 
-    public function statusChanges()
+    public function statuses()
     {
-        return $this->hasMany(StatusChange::class);
+        return $this->belongsToMany(Status::class)->withTimestamps();
     }
 
     public function season()
     {
         return $this->hasOne(Season::class);
+    }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
     }
 }
