@@ -29,12 +29,12 @@ class OrderSeeder extends Seeder
             $currentOrder = Order::create([
                 'user_id' => $user->id,
                 'season_id' => rand(1, 2),
-                'draft'=> rand(0, 1)
+                'draft' => rand(0, 1)
             ]);
             $randomStatusId = rand(1, count($status));
             $date = Carbon::now()->subYear();
             for ($i = 1; $i <= $randomStatusId; $i++) {
-                $currentOrder->statuses()->attach($i, ['created_at'=> $date->addDays(2), 'updated_at'=> $date->addDays(2)]);
+                $currentOrder->statuses()->attach($i, ['created_at' => $date->addDays(2), 'updated_at' => $date->addDays(2)]);
             }
 
             $books = Book::all()->shuffle();

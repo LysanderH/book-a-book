@@ -49,9 +49,6 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'last_login' => now(),
-                'bac_id' => 3,
-//                'category'=> Category::where('name','=','web-multimédia')
-                'category_id'=> 1
             ]);
             $currentUser->roles()->attach(Role::where('name', $user['role'])->first()->id);
         }

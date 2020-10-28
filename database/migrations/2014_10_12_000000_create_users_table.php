@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('bac_id')->nullable()->references('id')->on('bacs')->onDelete('cascade');
             $table->rememberToken();
+            $table->foreignId('group_id')->nullable()->references('id')->on('groups');
             // If a new year starts, check last_login > created_at from season. Ask to update group.
             $table->dateTime('last_login');
             $table->timestamps();

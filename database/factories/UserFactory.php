@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -22,6 +23,8 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $bac = rand(1, 3);
+        $groups = Group::where('name', 'LIKE', '_' . strval($bac) . '%')->get()->shuffle();
         return [
             'first-name' => $this->faker->firstName,
             'last-name' => $this->faker->lastName,
@@ -30,8 +33,9 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'last_login' => now(),
-            'bac_id' => floor(rand(1, 3)),
-            'category_id' => floor(rand(1, 3))
+            'bac_id' => $bac,
+            'category_id' => rand(1, 3),
+            'group_id' => $groups->first()->id
         ];
     }
 }
