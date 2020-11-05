@@ -45,7 +45,7 @@ class User extends Authenticatable implements HasMedia
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public function bacs()
@@ -58,8 +58,8 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function groups()
+    public function group()
     {
-        return $this->hasOne(Group::class);
+        return $this->belongsTo(Group::class);
     }
 }

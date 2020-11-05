@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-//        Array with 2 default users
+        // Array with 2 default users
         $users = [
             [
                 'first-name' => 'Lysander',
@@ -39,7 +39,6 @@ class UserSeeder extends Seeder
             ],
         ];
 
-
         foreach ($users as $user) {
             $currentUser = User::create([
                 'first-name' => $user['first-name'],
@@ -52,7 +51,8 @@ class UserSeeder extends Seeder
             ]);
             $currentUser->roles()->attach(Role::where('name', $user['role'])->first()->id);
         }
-        //        Add some random users to the default users array
+
+        // Add some random users to the default users array
         $randomUsers = User::factory(98)->create();
 
         foreach ($randomUsers as $randomUser) {

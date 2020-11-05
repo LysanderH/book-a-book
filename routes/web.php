@@ -13,15 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.myapp.com')->middleware('auth')->group(function () {
-    // dashboard (Order
-    Route::get('', function () {
+Route::domain('admin.myapp.com')->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
     });
 
-    // Add book
-    // Season -> resources
     // Book -> resources (add, remove, display, update)
+    // Season -> resources
     // Order (list, remove, add?)
     // Text -> resources
     // list payments (Order with User, StatusChange, Status
@@ -29,8 +27,9 @@ Route::domain('admin.myapp.com')->middleware('auth')->group(function () {
 
 // Home
 Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+    return view('user.dashboard');
+});
+//->middleware('auth');
 
 // Register step two
 
@@ -40,5 +39,5 @@ Route::get('/', function () {
 
 // Book list
 
-// Orders add order (lists all selected books from book list), see orders
+// Orders make new order (lists all selected books from book list), see orders
 
