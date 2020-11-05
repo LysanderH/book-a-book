@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,64 +16,90 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-<div id="app">
-    <h1 role="heading" aria-level="1">Book a book</h1>
-    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-        <h2 role="heading" aria-level="2" class="sr-only">Navigation principale</h2>
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
 
-        <p id="hamburgerbtn" class="md:hidden bg-purple-800">
-            menu
-        </p>
+<body class="min-h-screen">
+    <header class="flex items-center justify-between flex-wrap bg-black text-white">
+        <h1 role="heading" aria-level="1" class="">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                Book a book
+            </a>
+        </h1>
 
-        <div class="hidden md:flex md:flex-row" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
+        <!-- @todo: If user is logged in -->
+
+        <nav class="flex items-center justify-between flex-wrap">
+            <h2 role="heading" aria-level="2" class="sr-only">Navigation principale</h2>
+
+            <!-- If user is admin -->
             <ul class="navbar-nav mr-auto">
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Dashboard') }}</a>
+                </li>
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Livres commandés') }}</a>
+                </li>
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Liste des livres') }}</a>
+                </li>
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Modifier les messages') }}</a>
+                </li>
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Les commandes') }}</a>
+                </li>
+            </ul>
 
+            <!-- If user is student -->
+            <ul class="navbar-nav mr-auto">
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Dashboard') }}</a>
+                </li>
+                <li class="pr-5">
+                    <a class="nav-link" href="">{{ __('Mes commandes') }}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
-                    <li class="pr-5">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li class="pr-5">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
+                <li class="pr-5">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @if (Route::has('register'))
+                <li class="pr-5">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+                @endif
                 @else
-                    <li class="pr-5">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                <li class="pr-5">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
                 @endguest
             </ul>
-        </div>
-    </nav>
+        </nav>
+
+        <!-- End if user is logged in -->
+
+    </header>
 
     <main class="py-4 col-sm">
         @yield('content')
     </main>
-</div>
+    </div>
 </body>
+
 </html>
