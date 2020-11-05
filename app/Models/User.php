@@ -62,4 +62,14 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->roles()->pluck('name')->contains('admin');
+    }
+
+    public function getIsStudentAttribute()
+    {
+        return $this->roles()->pluck('name')->contains('user');
+    }
 }

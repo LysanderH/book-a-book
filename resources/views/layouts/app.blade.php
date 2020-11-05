@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Book a book</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,39 +25,42 @@
             </a>
         </h1>
 
-        <!-- @todo: If user is logged in -->
-
+        <!-- TODO: If user is logged in -->
         <nav class="flex items-center justify-between flex-wrap">
             <h2 role="heading" aria-level="2" class="sr-only">Navigation principale</h2>
 
             <!-- If user is admin -->
-            <ul class="navbar-nav mr-auto">
+            @if(Auth::check() && Auth::user()->isAdmin)
+            <ul class="flex">
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Dashboard') }}</a>
+                    <a class="nav-link" href="dashboard">{{ __('Dashboard') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Livres commandés') }}</a>
+                    <a class="nav-link" href="ordered-books">{{ __('Livres commandés') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Liste des livres') }}</a>
+                    <a class="nav-link" href="books">{{ __('Liste des livres') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Modifier les messages') }}</a>
+                    <a class="nav-link" href="messages">{{ __('Modifier les messages') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Les commandes') }}</a>
+                    <a class="nav-link" href="orders">{{ __('Les commandes') }}</a>
                 </li>
             </ul>
+            @endif
 
             <!-- If user is student -->
-            <ul class="navbar-nav mr-auto">
+            @if(Auth::check() && Auth::user()->isStudent)
+            <ul class="flex">
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Dashboard') }}</a>
+                    <a class="nav-link" href="dashboard">{{ __('Dashboard') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="">{{ __('Mes commandes') }}</a>
+                    <a class="nav-link" href="orders">{{ __('Mes commandes') }}</a>
                 </li>
             </ul>
+            @endif
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
