@@ -28,6 +28,15 @@ Route::domain('admin.myapp.com')->group(function () {
 Route::get('/books', function () {
     return view('user.books');
 });
+Route::get('/books/{book}', function () {
+    return view('user.book');
+});
+Route::get('/orders', function () {
+    return view('user.orders');
+});
+Route::get('/orders/{order}', function () {
+    return view('user.order');
+});
 
 // Home
 Route::get('/', function () {

@@ -1,5 +1,3 @@
-@section('title', 'Faire une commande')
-
 @extends('layouts.app')
 
 @section('content')
