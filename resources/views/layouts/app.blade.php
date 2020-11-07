@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Book a book</title>
+    <title>@yield('title') - Book a book</title>
+
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,6 +24,7 @@
             <a class="navbar-brand" href="{{ url('/') }}">
                 Book a book
             </a>
+            <span class="sr-only"> - @yield('title')</span>
         </h1>
 
         <!-- TODO: If user is logged in -->
