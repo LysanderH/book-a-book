@@ -25,10 +25,15 @@ Route::domain('admin.myapp.com')->group(function () {
     // list payments (Order with User, StatusChange, Status
 });
 
+Route::get('/books', function () {
+    return view('user.books');
+});
+
 // Home
 Route::get('/', function () {
     return view('user.dashboard');
 });
+
 //->middleware('auth');
 
 // Register step two
@@ -40,4 +45,3 @@ Route::get('/', function () {
 // Book list
 
 // Orders make new order (lists all selected books from book list), see orders
-
