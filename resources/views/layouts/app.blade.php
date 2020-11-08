@@ -35,20 +35,20 @@
             @if(Auth::check() && Auth::user()->isAdmin)
             <ul class="flex">
                 <li class="pr-5">
-                    <a class="nav-link" href="dashboard">{{ __('Dashboard') }}</a>
+                    <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
+                </li>
+                {{-- <li class="pr-5">
+                    <a class="nav-link" href="{{route(' ')}}">{{ __('Livres commandés') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="ordered-books">{{ __('Livres commandés') }}</a>
+                    <a class="nav-link" href="{{route('')}}">{{ __('Liste des livres') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="books">{{ __('Liste des livres') }}</a>
+                    <a class="nav-link" href="{{route('')}}">{{ __('Modifier les messages') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="messages">{{ __('Modifier les messages') }}</a>
-                </li>
-                <li class="pr-5">
-                    <a class="nav-link" href="orders">{{ __('Les commandes') }}</a>
-                </li>
+                    <a class="nav-link" href="{{route('')}}">{{ __('Les commandes') }}</a>
+                </li> --}}
             </ul>
             @endif
 
@@ -56,7 +56,7 @@
             @if(Auth::check() && Auth::user()->isStudent)
             <ul class="flex">
                 <li class="pr-5">
-                    <a class="nav-link" href="dashboard">{{ __('Dashboard') }}</a>
+                    <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
                 </li>
                 <li class="pr-5">
                     <a class="nav-link" href="orders">{{ __('Mes commandes') }}</a>

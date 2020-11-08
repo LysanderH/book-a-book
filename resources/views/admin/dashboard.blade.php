@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Dashboard')
 @section('content')
-    <h2>Hello</h2>
+<h2>I'm the admin</h2>
 @endsection

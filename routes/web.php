@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsStudent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('admin.myapp.com')->group(function () {
+Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
-    });
+    })->name('dashboard');
 
     // Book -> resources (add, remove, display, update)
     // Season -> resources
@@ -24,24 +26,26 @@ Route::domain('admin.myapp.com')->group(function () {
     // Text -> resources
     // list payments (Order with User, StatusChange, Status
 });
+Route::middleware(['auth', IsStudent::class])->group(function () {
+    Route::get('/books', function () {
+        return view('user.books');
+    });
+    Route::get('/books/{book}', function () {
+        return view('user.book');
+    });
+    Route::get('/orders', function () {
+        return view('user.orders');
+    });
+    Route::get('/orders/{order}', function () {
+        return view('user.order');
+    });
 
-Route::get('/books', function () {
-    return view('user.books');
-});
-Route::get('/books/{book}', function () {
-    return view('user.book');
-});
-Route::get('/orders', function () {
-    return view('user.orders');
-});
-Route::get('/orders/{order}', function () {
-    return view('user.order');
+    // Home
+    Route::get('/', function () {
+        return view('user.dashboard');
+    })->name('dashboard');
 });
 
-// Home
-Route::get('/', function () {
-    return view('user.dashboard');
-});
 
 //->middleware('auth');
 
