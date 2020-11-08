@@ -20,6 +20,9 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::get('/send-mail', function () {
+        return view('admin.send-reminder-mail');
+    })->name('send-mail');
     // Book -> resources (add, remove, display, update)
     // Season -> resources
     // Order (list, remove, add?)
