@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['total', 'draft'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -38,7 +40,7 @@ class Order extends Model
      *
      * @return int $total
      */
-    public function getTotalAttribute()
+    public function getCalculatedTotalAttribute()
     {
         // TODO optimise to get less queries
         // $books = $this->books;

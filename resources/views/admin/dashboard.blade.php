@@ -7,9 +7,10 @@
 <div class="financial-dif">
     <dl class="financial-dif__dlist">
         <dt class="financial-dif__therm">Dépences&nbsp;:</dt>
-        <dd class="financial-dif__definition">...€</dd>
+        <dd class="financial-dif__definition">@formatPrice($expenditures)</dd>
         <dt class="financial-dif__therm">Reçu&nbsp;:</dt>
-        <dd class="financial-dif__definition">...€</dd>
+        <dd class="financial-dif__definition">@formatPrice($receips)</dd>
+
     </dl>
 </div>
 
@@ -29,7 +30,7 @@
             {{-- @dd($order->user) --}}
             <td></td>
             <td>{{$order->user->lastname .', ' . $order->user->firstname}}</td>
-            <td>{{$order->total}}</td>
+            <td>@formatPrice($order->total)</td>
             <td>
                 <form action="post" class="a-dashboard__form"><label for="status" class="sr-only">Choix du status</label>
                     <select name="status" id="status" class="a-dashboard__select">

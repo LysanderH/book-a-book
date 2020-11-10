@@ -30,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('formatDate', function ($expression) {
             return "<?php echo ($expression)->format('d/m/Y'); ?>";
         });
+
+
+        Blade::directive('formatPrice', function ($price) {
+            return "<?php echo number_format($price, 2, ',', ' ') . '€'; ?>";
+        });
     }
 }

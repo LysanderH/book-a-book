@@ -42,6 +42,15 @@ class OrderSeeder extends Seeder
             foreach ($books as $book) {
                 $currentOrder->books()->attach($book->id);
             }
+
+            // Update the total of the order
+            $currentOrder->update(
+                [
+                    'total' => $books->sum(function ($book) {
+                        return $book->seasons->find(1)->pivot->price;
+                    })
+                ]
+            );
         }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Status;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -19,7 +20,20 @@ class AdminDashboardController extends Controller
 
         $statuses = Status::all();
 
-        return view('admin.dashboard', ['orders' => $orders, 'statuses' => $statuses]);
+        $expenditures = $orders->sum(function ($order) {
+            return $order->total;
+        });
+
+        $receips = 0;
+
+        foreach ($orders as $order) {
+            if ($order->statuses->last()->name !== 'commandé') {
+                $receips += $order->total;
+            }
+        }
+
+
+        return view('admin.dashboard', ['orders' => $orders, 'statuses' => $statuses, 'expenditures' => $expenditures, 'receips' => $receips]);
     }
 
     /**
