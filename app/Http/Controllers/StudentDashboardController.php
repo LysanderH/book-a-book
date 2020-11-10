@@ -26,11 +26,8 @@ class StudentDashboardController extends Controller
         $studentOrders = Order::with('books', 'season')->where('user_id', Auth::user()->id)->get();
 
         $currentOrders = $studentOrders->where('season.archived', false)->first();
-        // dd($studentOrders->where('season.archived', false));
 
         $draftOrders = $studentOrders->where('draft', true)->first();
-
-        // dd($draftOrders);
 
         return view('user.dashboard', ['currentOrders' => $currentOrders, 'draftOrders' => $draftOrders]);
     }

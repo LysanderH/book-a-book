@@ -18,9 +18,10 @@
     <thead>
         <tr>
             <th class='sr-only'>Image</th>
-            <th><a href="/?sort=student" class="a-dashboard__link"></a>Étudiant</th>
-            <th><a href="/?sort=topay" class="a-dashboard__link"></a>Montant à payer</th>
-            <th><a href="/?sort=status" class="a-dashboard__link"></a>Status</th>
+            <th><a href="/?sort=student" class="a-dashboard__link">Étudiant</a></th>
+            <th><a href="/?sort=topay" class="a-dashboard__link">Montant à payer</a></th>
+            <th><a href="/?sort=topay" class="a-dashboard__link">Nombre de livres</a></th>
+            <th><a href="/?sort=status" class="a-dashboard__link">Status</a></th>
         </tr>
     </thead>
     <tbody>
@@ -28,9 +29,12 @@
         @foreach($orders as $order)
         <tr>
             {{-- @dd($order->user) --}}
-            <td></td>
+            <td><img src="{{$order->user->getFirstMediaUrl('users')}}" alt="Image de profil de {{$order->user->lastname . ' ' . $order->user->firstname}}" width="50" height="50"></td>
+
+
             <td>{{$order->user->lastname .', ' . $order->user->firstname}}</td>
             <td>@formatPrice($order->total)</td>
+            <td>{{count($order->books)}}</td>
             <td>
                 <form action="post" class="a-dashboard__form"><label for="status" class="sr-only">Choix du status</label>
                     <select name="status" id="status" class="a-dashboard__select">

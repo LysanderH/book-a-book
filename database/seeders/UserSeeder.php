@@ -50,6 +50,7 @@ class UserSeeder extends Seeder
                 'last_login' => now(),
             ]);
             $currentUser->roles()->attach(Role::where('name', $user['role'])->first()->id);
+            $currentUser->addMediaFromUrl('https://i.pravatar.cc/150')->toMediaCollection('users');
         }
 
         // Add some random users to the default users array
@@ -57,6 +58,7 @@ class UserSeeder extends Seeder
 
         foreach ($randomUsers as $randomUser) {
             $randomUser->roles()->attach(Role::where('name', 'user')->first()->id);
+            $randomUser->addMediaFromUrl('https://i.pravatar.cc/150')->toMediaCollection('users');
         }
     }
 }
