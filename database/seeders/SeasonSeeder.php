@@ -15,13 +15,15 @@ class SeasonSeeder extends Seeder
     public function run()
     {
         Season::create([
-            'start_year'=> '2019',
-            'end_year'=> '2020',
-            'archived'=> true
+            'start_year' => '2019',
+            'end_year' => '2020',
+            'archived' => true,
+            'deadline' => '2019-10-28 23:59:59',
         ]);
         Season::create([
-            'start_year'=> '2020',
-            'end_year'=> '2021'
+            'start_year' => '2020',
+            'end_year' => '2021',
+            'deadline' => '2020-10-28 23:59:59',
         ]);
     }
 }

@@ -21,11 +21,39 @@ class Order extends Model
 
     public function season()
     {
-        return $this->hasOne(Season::class);
+        return $this->belongsTo(Season::class);
     }
 
     public function books()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->belongsToMany(Book::class)->withPivot('quantity');
+    }
+
+
+    /**
+     * getTotalAttribute calculates the total of an order
+     * 
+     * note :
+     * $total = price(from order season) * quantity of books
+     *
+     * @return int $total
+     */
+    public function getTotalAttribute()
+    {
+        // TODO optimise to get less queries
+        // $books = $this->books;
+        // $total = 0;
+
+        // foreach ($books as $book) {
+        //     $total = $total + ($book->seasons->where('id', $this->season()->first()->id)->first()->pivot->price * $book->pivot->quantity);
+        // };
+
+        // In Datenbank abspeichern
+
+        return number_format($this->books->sum(function ($book) {
+            return $book->current_season->pivot->price * $book->pivot->quantity;
+        }), 2, ',', ' ') . '€';
+
+        // return number_format($total, 2, ',', ' ') . '€';
     }
 }

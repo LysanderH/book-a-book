@@ -16,6 +16,7 @@ class CreateBookOrderTable extends Migration
         Schema::create('book_order', function (Blueprint $table) {
             $table->foreignId('book_id')->references('id')->on('book')->onDelete('cascade');
             $table->foreignId('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->float('quantity')->default(1);
         });
     }
 

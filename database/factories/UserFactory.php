@@ -26,8 +26,8 @@ class UserFactory extends Factory
         $bac = rand(1, 3);
         $groups = Group::where('name', 'LIKE', '_' . strval($bac) . '%')->get()->shuffle();
         return [
-            'first-name' => $this->faker->firstName,
-            'last-name' => $this->faker->lastName,
+            'firstname' => $this->faker->firstName,
+            'lastname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\StudentDashboardController;
+use App\Http\Controllers\StudentOrderController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsStudent;
 use Illuminate\Support\Facades\Route;
+use phpDocumentor\Reflection\Types\Resource_;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/send-mail', function () {
         return view('admin.send-reminder-mail');
@@ -30,23 +32,17 @@ Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () 
     // list payments (Order with User, StatusChange, Status
 });
 Route::middleware(['auth', IsStudent::class])->group(function () {
+    // Home
+    Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/books', function () {
         return view('user.books');
     });
     Route::get('/books/{book}', function () {
         return view('user.book');
     });
-    Route::get('/orders', function () {
-        return view('user.orders');
-    });
-    Route::get('/orders/{order}', function () {
-        return view('user.order');
-    });
 
-    // Home
-    Route::get('/', function () {
-        return view('user.dashboard');
-    })->name('dashboard');
+    Route::resource('/orders', StudentOrderController::class);
 });
 
 

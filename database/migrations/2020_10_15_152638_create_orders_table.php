@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('season_id')->references('id')->on('seasons')->onDelete('cascade');
             $table->boolean('draft')->default(false);
+            $table->float('total')->default(0);
             $table->timestamps();
         });
     }

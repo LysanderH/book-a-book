@@ -17,6 +17,7 @@ class CreateSeasonsTable extends Migration
             $table->id();
             $table->year('start_year');
             $table->year('end_year');
+            $table->date('deadline');
             $table->boolean('archived')->default(0);
             $table->timestamps();
         });

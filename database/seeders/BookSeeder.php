@@ -200,6 +200,7 @@ class BookSeeder extends Seeder
 
             // Add prices to book using pivot table.
             $currentBook->seasons()->attach(Season::where('start_year', '2020')->first()->id, ['price' => $book['price'], 'public_price' => $book['price_amazon']]);
+            $currentBook->seasons()->attach(Season::where('start_year', '2019')->first()->id, ['price' => $book['price'], 'public_price' => $book['price_amazon']]);
 
             // New Guzzle Client
             $client = new Client();
@@ -217,7 +218,5 @@ class BookSeeder extends Seeder
                 $currentBook->addMediaFromUrl(json_decode($content)->items[0]->volumeInfo->imageLinks->thumbnail)->toMediaCollection('books');
             }
         }
-
-
     }
 }

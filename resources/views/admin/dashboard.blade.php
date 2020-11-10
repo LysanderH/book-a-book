@@ -19,27 +19,38 @@
             <th class='sr-only'>Image</th>
             <th><a href="/?sort=student" class="a-dashboard__link"></a>Étudiant</th>
             <th><a href="/?sort=topay" class="a-dashboard__link"></a>Montant à payer</th>
-            <th><a href="/?sort=payed" class="a-dashboard__link"></a>Montant payé</th>
             <th><a href="/?sort=status" class="a-dashboard__link"></a>Status</th>
         </tr>
     </thead>
     <tbody>
+
+        @foreach($orders as $order)
         <tr>
+            {{-- @dd($order->user) --}}
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{$order->user->lastname .', ' . $order->user->firstname}}</td>
+            <td>{{$order->total}}</td>
             <td>
                 <form action="post" class="a-dashboard__form"><label for="status" class="sr-only">Choix du status</label>
                     <select name="status" id="status" class="a-dashboard__select">
-                        <option value="">Commandé</option>
-                        <option value="">Payé</option>
-                        <option value="">Disponible</option>
-                        <option value="">Retiré</option>
+
+                        @foreach($statuses as $status)
+                        <option value="{{$status->id}}" @if($order->statuses->last()->id === $status->id)
+                            selected
+                            @endif
+                            >{{$status->name}}</option>
+
+                        @endforeach
+
                     </select>
+                    <noscript>
+                        <button type="submit">Changer le status</button>
+                    </noscript>
                 </form>
             </td>
         </tr>
+        @endforeach
+
     </tbody>
 </table>
 <a href="{{route('send-mail')}}" class="a-dashboard__mail">Envoyer un mail de rappel</a>

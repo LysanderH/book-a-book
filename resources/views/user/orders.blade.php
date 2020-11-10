@@ -16,12 +16,15 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($orders as $order)
             <tr>
-                <td><a href="/orders/{{-- TODO order id --}}" class="orders__link"></a></td>
-                <td><a href="/orders/{{-- TODO order id --}}" class="orders__link"></a></td>
-                <td><a href="/orders/{{-- TODO order id --}}" class="orders__link"></a></td>
-                <td><a href="/orders/{{-- TODO order id --}}" class="orders__link"></a></td>
+                <td><a href="/orders/{{$order->user->id}}" class="orders__link">@formatDate($order->created_at)</a></td>
+                <td><a href="/orders/{{$order->user->id}}" class="orders__link">{{$order->statuses->last()->name}}</a></td>
+                <td><a href="/orders/{{$order->user->id}}" class="orders__link">{{count($order->books)}}</a></td>
+                <td><a href="/orders/{{$order->user->id}}" class="orders__link">{{$order->total}}</a></td>
+
             </tr>
+            @endforeach
         </tbody>
     </table>
 </section>

@@ -22,16 +22,16 @@ class UserSeeder extends Seeder
         // Array with 2 default users
         $users = [
             [
-                'first-name' => 'Lysander',
-                'last-name' => 'Hans',
+                'firstname' => 'Lysander',
+                'lastname' => 'Hans',
                 'email' => 'lysander.hans@hotmail.com',
                 'password' => Hash::make('password'),
                 'role' => 'user',
                 'last_login' => now()
             ],
             [
-                'first-name' => 'Xavier',
-                'last-name' => 'Spirlet',
+                'firstname' => 'Xavier',
+                'lastname' => 'Spirlet',
                 'email' => 'lysander.hans@student.hepl.be',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
@@ -41,8 +41,8 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             $currentUser = User::create([
-                'first-name' => $user['first-name'],
-                'last-name' => $user['last-name'],
+                'firstname' => $user['firstname'],
+                'lastname' => $user['lastname'],
                 'email' => $user['email'],
                 'password' => $user['password'],
                 'email_verified_at' => now(),

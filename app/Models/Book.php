@@ -13,7 +13,7 @@ class Book extends Model implements HasMedia
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
 
     public function seasons()
@@ -21,4 +21,12 @@ class Book extends Model implements HasMedia
         return $this->belongsToMany(Season::class)->withPivot('price', 'public_price');
     }
 
+    public function getCurrentSeasonAttribute()
+    {
+        // Récupérer la saison courante / Season -> current
+
+        $currentSeason = Season::latest()->first();
+
+        return $this->seasons->where('id', $currentSeason->id)->first();
+    }
 }

@@ -6,7 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class StudentDashboardController extends Controller
+class StudentOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,24 +15,9 @@ class StudentDashboardController extends Controller
      */
     public function index()
     {
+        $orders = Order::with('statuses', 'books', 'books.seasons')->where('user_id', Auth::user()->id)->get();
 
-        // Get deadline
-
-        // Get timetable
-
-        // Get user order
-        // $studentOrders = Auth::user()->orders()->where('draft', false)->with('books', 'season')->whereIn()->get();
-        // $studentOrders = Auth::user()->orders()->with('books', 'season')->get();
-        $studentOrders = Order::with('books', 'season')->where('user_id', Auth::user()->id)->get();
-
-        $currentOrders = $studentOrders->where('season.archived', false)->first();
-        // dd($studentOrders->where('season.archived', false));
-
-        $draftOrders = $studentOrders->where('draft', true)->first();
-
-        // dd($draftOrders);
-
-        return view('user.dashboard', ['currentOrders' => $currentOrders, 'draftOrders' => $draftOrders]);
+        return view('user.orders', ['orders' => $orders]);
     }
 
     /**
@@ -64,7 +49,11 @@ class StudentDashboardController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::with('books', 'user')->with('books.seasons')->where('id', $id)->first();
+        if (Auth::user()->id != $order->user->id) {
+            return redirect()->back();
+        }
+        return view('user.order', ['order' => $order]);
     }
 
     /**
