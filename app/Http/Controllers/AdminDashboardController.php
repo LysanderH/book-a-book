@@ -14,9 +14,52 @@ class AdminDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('statuses', 'user', 'season')->where('draft', false)->get()->where('season.archived', false);
+        $sortingArray = [
+            'student' => 'user.lastname',
+            'topay' => 'total',
+            'books' => function ($order) {
+                return count($order->books);
+            },
+            'status' => function ($order) {
+                return $order->current_status->id;
+            }
+        ];
+
+        $orders = Order::with('statuses', 'season', 'user.media', 'books')->final()->whereHas('season', function ($season) {
+            return $season->active();
+        })->get()->sortBy($sortingArray[$request->sort ?? 'status']);
+
+
+        /**
+         * Custom pagination
+         * 
+         * Solves the problem with orders current_status accessor
+         */
+        $totalCount = $orders->count();
+        $itemsPerPage = 10;
+
+        $page = $request->page ?: 1;
+        if ($page) {
+            $skip = $itemsPerPage * ($page - 1);
+            $orders = $orders->take($itemsPerPage * $page)->skip($skip);
+        } else {
+            $orders = $orders->take($itemsPerPage)->skip(0);
+        }
+
+        $parameters = $request->getQueryString() ?? 'page=1';
+        // dump($parameters);
+        $parameters = preg_replace('/&page(=[^&]*)?|^page(=[^&]*)?&?/', '', $parameters);
+        // dump($parameters);
+        $path = '?' . $parameters;
+        // dd($path);
+        $categories = $orders->toArray();
+
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator($categories, $totalCount, $itemsPerPage, $page);
+        $paginator = $paginator->withPath($path);
+        // dd($paginator);
+
 
         $statuses = Status::all();
 
@@ -26,14 +69,25 @@ class AdminDashboardController extends Controller
 
         $receips = 0;
 
-        foreach ($orders as $order) {
+        $receips = $orders->sum(function ($order) {
             if ($order->statuses->last()->name !== 'commandé') {
-                $receips += $order->total;
+                return $order->total;
             }
+        });
+
+        $pageQuery = '';
+        if ($request->page) {
+            $pageQuery = $request->page;
         }
 
-
-        return view('admin.dashboard', ['orders' => $orders, 'statuses' => $statuses, 'expenditures' => $expenditures, 'receips' => $receips]);
+        return view('admin.dashboard', [
+            'orders' => $orders,
+            'statuses' => $statuses,
+            'expenditures' => $expenditures,
+            'receips' => $receips,
+            'pageQuery' => $pageQuery,
+            'paginator' => $paginator
+        ]);
     }
 
     /**

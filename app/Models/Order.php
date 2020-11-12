@@ -55,7 +55,30 @@ class Order extends Model
         return number_format($this->books->sum(function ($book) {
             return $book->current_season->pivot->price * $book->pivot->quantity;
         }), 2, ',', ' ') . '€';
+    }
 
-        // return number_format($total, 2, ',', ' ') . '€';
+
+    /**
+     * getCurrentStatusAttribute
+     * 
+     * return the current status of this order
+     *
+     * @return int id
+     */
+    public function getCurrentStatusAttribute()
+    {
+        return $this->statuses->sortBy(function ($status) {
+            return $status->pivot->created_at;
+        })->last();
+    }
+
+    public function getIsCurrentAttribute()
+    {
+        return $this->season->archived === false;
+    }
+
+    public function scopeFinal($query)
+    {
+        return $query->where('draft', false);
     }
 }

@@ -31,6 +31,7 @@
         <nav class="flex items-center justify-between flex-wrap">
             <h2 role="heading" aria-level="2" class="sr-only">Navigation principale</h2>
 
+            {{-- @can --}}
             <!-- If user is admin -->
             @if(Auth::check() && Auth::user()->isAdmin)
             <ul class="flex">
@@ -50,10 +51,8 @@
                     <a class="nav-link" href="{{route('')}}">{{ __('Les commandes') }}</a>
                 </li> --}}
             </ul>
-            @endif
-
+            @else
             <!-- If user is student -->
-            @if(Auth::check() && Auth::user()->isStudent)
             <ul class="flex">
                 <li class="pr-5">
                     <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>

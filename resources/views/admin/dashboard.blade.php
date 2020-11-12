@@ -18,10 +18,10 @@
     <thead>
         <tr>
             <th class='sr-only'>Image</th>
-            <th><a href="/?sort=student" class="a-dashboard__link">Étudiant</a></th>
-            <th><a href="/?sort=topay" class="a-dashboard__link">Montant à payer</a></th>
-            <th><a href="/?sort=topay" class="a-dashboard__link">Nombre de livres</a></th>
-            <th><a href="/?sort=status" class="a-dashboard__link">Status</a></th>
+            <th><a href="?sort=student{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Étudiant</a></th>
+            <th><a href="?sort=topay{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Montant à payer</a></th>
+            <th><a href="?sort=books{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Nombre de livres</a></th>
+            <th><a href="?sort=status{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Status</a></th>
         </tr>
     </thead>
     <tbody>
@@ -32,7 +32,7 @@
             <td><img src="{{$order->user->getFirstMediaUrl('users')}}" alt="Image de profil de {{$order->user->lastname . ' ' . $order->user->firstname}}" width="50" height="50"></td>
 
 
-            <td>{{$order->user->lastname .', ' . $order->user->firstname}}</td>
+            <td>{{$order->user->lastname .', ' . $order->user->firstname}} @dump($order->current_status->id)</td>
             <td>@formatPrice($order->total)</td>
             <td>{{count($order->books)}}</td>
             <td>
@@ -40,11 +40,10 @@
                     <select name="status" id="status" class="a-dashboard__select">
 
                         @foreach($statuses as $status)
-                        <option value="{{$status->id}}" @if($order->statuses->last()->id === $status->id)
+                        <option value="{{$status->id}}" @if($order->current_status->id === $status->id)
                             selected
                             @endif
                             >{{$status->name}}</option>
-
                         @endforeach
 
                     </select>
@@ -60,5 +59,6 @@
 </table>
 <a href="{{route('send-mail')}}" class="a-dashboard__mail">Envoyer un mail de rappel</a>
 
+{{$paginator->links()}}
 
 @endsection
