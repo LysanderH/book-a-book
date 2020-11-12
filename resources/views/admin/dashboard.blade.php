@@ -28,11 +28,10 @@
 
         @foreach($orders as $order)
         <tr>
-            {{-- @dd($order->user) --}}
             <td><img src="{{$order->user->getFirstMediaUrl('users')}}" alt="Image de profil de {{$order->user->lastname . ' ' . $order->user->firstname}}" width="50" height="50"></td>
 
 
-            <td>{{$order->user->lastname .', ' . $order->user->firstname}} @dump($order->current_status->id)</td>
+            <td>{{$order->user->lastname .', ' . $order->user->firstname}}</td>
             <td>@formatPrice($order->total)</td>
             <td>{{count($order->books)}}</td>
             <td>

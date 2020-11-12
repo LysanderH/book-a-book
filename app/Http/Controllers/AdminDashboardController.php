@@ -49,16 +49,12 @@ class AdminDashboardController extends Controller
         }
 
         $parameters = $request->getQueryString() ?? 'page=1';
-        // dump($parameters);
         $parameters = preg_replace('/&page(=[^&]*)?|^page(=[^&]*)?&?/', '', $parameters);
-        // dump($parameters);
         $path = '?' . $parameters;
-        // dd($path);
         $categories = $orders->toArray();
 
         $paginator = new \Illuminate\Pagination\LengthAwarePaginator($categories, $totalCount, $itemsPerPage, $page);
         $paginator = $paginator->withPath($path);
-        // dd($paginator);
 
 
         $statuses = Status::all();
