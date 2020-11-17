@@ -36,20 +36,18 @@
             @if(Auth::check() && Auth::user()->isAdmin)
             <ul class="flex">
                 <li class="pr-5">
-                    <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
-                </li>
-                {{-- <li class="pr-5">
-                    <a class="nav-link" href="{{route(' ')}}">{{ __('Livres commandés') }}</a>
+                    <a class="nav-link" href="{{route('dashboard.index')}}">{{ __('Dashboard') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="{{route('')}}">{{ __('Liste des livres') }}</a>
+                    <a class="nav-link" href="{{route('books.index')}}">{{ __('Livres commandés') }}</a>
+
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="{{route('')}}">{{ __('Modifier les messages') }}</a>
+                    <a class="nav-link" href="{{route('seasons.index')}}">{{ __('Liste des livres') }}</a>
                 </li>
                 <li class="pr-5">
-                    <a class="nav-link" href="{{route('')}}">{{ __('Les commandes') }}</a>
-                </li> --}}
+                    <a class="nav-link" href="{{route('texts.index')}}">{{ __('Modifier les messages') }}</a>
+                </li>
             </ul>
             @else
             <!-- If user is student -->

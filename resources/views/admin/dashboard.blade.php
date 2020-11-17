@@ -18,10 +18,10 @@
     <thead>
         <tr>
             <th class='sr-only'>Image</th>
-            <th><a href="?sort=student{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Étudiant</a></th>
-            <th><a href="?sort=topay{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Montant à payer</a></th>
-            <th><a href="?sort=books{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Nombre de livres</a></th>
-            <th><a href="?sort=status{{isset($pageQuery) ?'&page='. $pageQuery:''}}" class="a-dashboard__link">Status</a></th>
+            <th><a href="?sort=student{{$pageQuery ?? ''}}" class="a-dashboard__link">Étudiant</a></th>
+            <th><a href="?sort=topay{{$pageQuery ?? ''}}" class="a-dashboard__link">Montant à payer</a></th>
+            <th><a href="?sort=books{{$pageQuery ?? ''}}" class="a-dashboard__link">Nombre de livres</a></th>
+            <th><a href="?sort=status{{$pageQuery ?? ''}}" class="a-dashboard__link">Status</a></th>
         </tr>
     </thead>
     <tbody>

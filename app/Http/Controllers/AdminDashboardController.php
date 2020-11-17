@@ -16,6 +16,8 @@ class AdminDashboardController extends Controller
      */
     public function index(Request $request)
     {
+        $sortOrder = (bool) $request->sortOrder ?? false;
+
         $sortingArray = [
             'student' => 'user.lastname',
             'topay' => 'total',
@@ -27,9 +29,17 @@ class AdminDashboardController extends Controller
             }
         ];
 
+        if ($request->currentSort === $request->sort && isset($request->sort)) {
+            $sortOrder = !$sortOrder;
+            $currentSort = $request->currentSort;
+        } else {
+            $currentSort = $request->sort;
+        }
+
+
         $orders = Order::with('statuses', 'season', 'user.media', 'books')->final()->whereHas('season', function ($season) {
             return $season->active();
-        })->get()->sortBy($sortingArray[$request->sort ?? 'status']);
+        })->get()->sortBy($sortingArray[$request->sort ?? 'status'], SORT_REGULAR, $sortOrder);
 
 
         /**
@@ -71,10 +81,10 @@ class AdminDashboardController extends Controller
             }
         });
 
-        $pageQuery = '';
-        if ($request->page) {
-            $pageQuery = $request->page;
-        }
+        // $pageQuery = '';
+        // if ($request->page) {
+        $pageQuery = '&currentSort=' . ($currentSort ?? 'status') . '&sortOrder=' . $sortOrder . '&page=' . $request->page;
+        // }
 
         return view('admin.dashboard', [
             'orders' => $orders,
