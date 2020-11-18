@@ -193,7 +193,8 @@ class BookSeeder extends Seeder
                 'isbn' => $book['isbn'],
                 'excerpt' => $book['excerpt'],
                 'bac_id' => Bac::where('name', '=', $book['bac'])->first()->id,
-                'category_id' => (isset($book['category']) && $book['category'] !== '') ? Category::where('name', '=', $book['category'])->first()->id : null
+                'category_id' => (isset($book['category']) && $book['category'] !== '') ? Category::where('name', '=', $book['category'])->first()->id : null,
+                'stock' => rand(0, 30)
             ]);
 
             $url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . str_replace('-', '', $currentBook->isbn);

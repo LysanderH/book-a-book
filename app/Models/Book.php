@@ -24,9 +24,29 @@ class Book extends Model implements HasMedia
     public function getCurrentSeasonAttribute()
     {
         // Récupérer la saison courante / Season -> current
+        return $this->seasons->sortBy('created_at')->first();
+    }
 
-        $currentSeason = Season::latest()->first();
+    public function getNumberOfOrdersAttribute()
+    {
+        return $this->orders->sum(function ($order) {
+            return $order->pivot->quantity;
+        });
+    }
 
-        return $this->seasons->where('id', $currentSeason->id)->first();
+    public function getCurrentPriceAttribute()
+    {
+        return $this->current_season->pivot->price;
+    }
+
+    public function scopeWithBookQuantity($query)
+    {
+        $query->addSelect([
+            'ordered_books_quantity' => BookOrder::select('quantity')->first()
+            // BookOrder::selectRaw('MAX(quantity)')
+            //     ->where('book_id', 'books.id')
+            //     ->groupBy('book_id')
+            //     ->first()
+        ]);
     }
 }

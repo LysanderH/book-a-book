@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->foreignId('bac_id')->references('id')->on('bacs');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories');
             $table->text('excerpt');
+            $table->bigInteger('stock');
             $table->softDeletes();
             $table->timestamps();
         });

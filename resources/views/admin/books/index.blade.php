@@ -13,13 +13,15 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($books as $book)
         <tr>
-            <td><img src="#" alt="Couverture du livre Titre du livre"></td>
-            <td>Titre</td>
-            <td>5</td>
-            <td>6</td>
-            <td>@formatPrice(16)</td>
+            <td><img src="{{ $book->file_name?asset('/storage/'.$book->model_id . '/' .$book->file_name): '/storage/default-media.jpg' }}" alt="Couverture du livre {{$book->title}}"></td>
+            <td>{{$book->title}}</td>
+            <td>{{$book->stock}}</td>
+            {{-- <td>{{$book->number_of_orders}}</td> --}}
+            {{-- <td>@formatPrice($book->current_price)</td> --}}
         </tr>
+        @endforeach
     </tbody>
 </table>
 @endsection

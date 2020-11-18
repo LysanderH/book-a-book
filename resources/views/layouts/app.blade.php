@@ -33,7 +33,7 @@
 
             {{-- @can --}}
             <!-- If user is admin -->
-            @if(Auth::check() && Auth::user()->isAdmin)
+            @if(isset($user) && $user->admin)
             <ul class="flex">
                 <li class="pr-5">
                     <a class="nav-link" href="{{route('dashboard.index')}}">{{ __('Dashboard') }}</a>
@@ -76,7 +76,7 @@
                 @else
                 <li class="pr-5">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
+                        {{-- {{ Auth::user()->name }} --}}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

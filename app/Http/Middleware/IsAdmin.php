@@ -16,7 +16,10 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->isAdmin) {
+        $user = $request->user();
+        $user->admin = $user->is_admin;
+        $request->merge(['user' => $user]);
+        if (!$user->admin) {
             return redirect('/');
         }
         return $next($request);
